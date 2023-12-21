@@ -9,7 +9,7 @@ def register_user(request):
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
             user.save()
-            return redirect('')  # Redirect to login page or any other page
+            return redirect('login')
     else:
         form = UserRegistrationForm()
     return render(request, 'register.html', {'form': form})
@@ -25,7 +25,7 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 # Redirect to a specific page after login
-                return redirect('')  # Replace 'home' with your desired URL name
+                return redirect('create_recipe')
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
