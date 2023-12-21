@@ -1,0 +1,22 @@
+<!-- recipe_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe List</title>
+    <!-- Add any necessary CSS or styling links here -->
+</head>
+<body>
+    <h1>Recipe List</h1>
+    <ul>
+        {% for recipe in recipes %}
+            <li>{{ recipe.name }}</li>
+            <li>{{ recipe.recipe_text }}</li>
+            <li>{{ recipe.average_rating }}</li>
+            <li>{{ recipe.author }}</li>
+            <li>{{ recipe.ingredients }}</li>
+            <li>{{ recipe.total_ratings }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

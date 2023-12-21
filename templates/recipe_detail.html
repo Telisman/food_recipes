@@ -1,0 +1,23 @@
+<!-- recipe_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ recipe.name }} Details</title>
+    <!-- Add any necessary CSS or styling links here -->
+</head>
+<body>
+<h1>{{ recipe.name }} Details</h1>
+<p><strong>Recipe Name:</strong> {{ recipe.name }}</p>
+<p><strong>Recipe Text:</strong> {{ recipe.recipe_text }}</p>
+<!-- Display other recipe details as needed -->
+
+<h2>Rate this Recipe</h2>
+<form method="post" action="{% url 'recipe_detail' recipe.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Rating</button>
+</form>
+<p><strong>Average Rating:</strong> {{ average_rating }}</p>
+</body>
+</html>

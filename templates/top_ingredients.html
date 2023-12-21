@@ -1,0 +1,17 @@
+<!-- top_ingredients.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Top Ingredients</title>
+    <!-- Add any necessary CSS or styling links here -->
+</head>
+<body>
+    <h1>Top Ingredients</h1>
+    <ul>
+        {% for ingredient in top_ingredients %}
+            <li>{{ ingredient.name }} - Used in {{ ingredient.num_recipes }} recipes</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
