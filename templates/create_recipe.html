@@ -11,6 +11,15 @@
     <form method="post" action="{% url 'create_recipe' %}">
         {% csrf_token %}
         {{ form.as_p }}
+
+        <!-- Ingredient selection -->
+        <label for="id_ingredients">Ingredients:</label>
+        <select name="ingredients" id="id_ingredients" multiple>
+            {% for ingredient in ingredients %}
+                <option value="{{ ingredient.id }}">{{ ingredient.name }}</option>
+            {% endfor %}
+        </select>
+
         <button type="submit">Create Recipe</button>
     </form>
 </body>
