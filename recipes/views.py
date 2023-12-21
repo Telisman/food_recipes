@@ -2,19 +2,34 @@ from django.shortcuts import render, redirect,get_object_or_404
 from .form import RecipeForm,RecipeRatingForm
 from django.contrib.auth.decorators import login_required
 from .models import Recipe,RecipeRating
+from ingredient.models import Ingredient
 
 @login_required
 def create_recipe(request):
+    ingredients = Ingredient.objects.all()
     if request.method == 'POST':
         form = RecipeForm(request.POST)
         if form.is_valid():
             recipe = form.save(commit=False)
-            recipe.author = request.user  # Assuming you're using user authentication
+            recipe.author = request.user
+
+            # Save the recipe first to obtain its ID
             recipe.save()
-            return redirect('create_recipe')  # Replace 'home' with the desired redirect URL after recipe creation
+
+            # Get the selected ingredients from the form
+            selected_ingredients = request.POST.getlist('ingredients')
+
+            # Assign selected ingredients to the recipe
+            for ingredient_id in selected_ingredients:
+                ingredient = Ingredient.objects.get(pk=ingredient_id)
+                recipe.ingredients.add(ingredient)
+
+            # Update average rating and total ratings here if needed
+
+            return redirect('home')  # Replace 'home' with the desired redirect URL after recipe creation
     else:
         form = RecipeForm()
-    return render(request, 'create_recipe.html', {'form': form})
+    return render(request, 'create_recipe.html', {'form': form,'ingredients':ingredients})
 # recipes/views.py
 
 
