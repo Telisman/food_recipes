@@ -1,5 +1,3 @@
-from django.shortcuts import render
-# user/views.py
 from django.shortcuts import render, redirect
 from .registration_form import UserRegistrationForm
 
