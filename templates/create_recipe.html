@@ -1,26 +1,95 @@
-<!-- create_recipe.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Create Recipe</title>
-    <!-- Add any necessary CSS or styling links here -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Yummy Bootstrap Template - Index</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Amatic+SC:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}">
+
+    <!-- Template Main CSS File -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/main.css' %}">
+
 </head>
+
 <body>
-    <h1>Create Recipe</h1>
-    <form method="post" action="{% url 'create_recipe' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
 
-        <!-- Ingredient selection -->
-        <label for="id_ingredients">Ingredients:</label>
-        <select name="ingredients" id="id_ingredients" multiple>
-            {% for ingredient in ingredients %}
-                <option value="{{ ingredient.id }}">{{ ingredient.name }}</option>
-            {% endfor %}
-        </select>
 
-        <button type="submit">Create Recipe</button>
-    </form>
+
+<main id="main">
+    <section id="book-a-table" class="book-a-table">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-header">
+                <h2>Add new RecipeS</h2>
+                <p>Create <span>Your New</span> RecipE</p>
+
+            </div>
+
+            <div class="row g-0">
+
+                <div class="col-lg-4 reservation-img" data-aos="zoom-out" data-aos-delay="200"><img
+                        src="{% static 'assets/img/reservation.jpg' %}" width="100%" height="100%" alt="Tabler"
+                        class="navbar-brand-image"></div>
+
+
+                <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
+                    <form method="post" action="{% url 'create_recipe' %}" class="php-email-form" data-aos="fade-up"
+                          data-aos-delay="100">
+                        {% csrf_token %}
+                        <div class="row gy-4">
+                            <div class="col-lg-4 col-md-6">
+                              <label for="id_name">Name:</label>
+                                <input type="text" name="name" class="form-control" id="id_name"
+                                       placeholder="Name of RecipE" data-rule="minlen:4">
+                                <div class="validate"></div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                              <label for="id_author">Author:</label>
+                                <select class="form-control" name="author" required="" id="id_author">
+                                    <option value="{{ user.id }}">{{ user.username }}</option>
+                                </select>
+                                <div class="validate"></div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                              <label for="id_ingredients">Ingredients:</label>
+                                <select  class="form-control" name="ingredients" id="id_ingredients" multiple>
+                                    {% for ingredient in ingredients %}
+                                    <option value="{{ ingredient.id }}">{{ ingredient.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="validate"></div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <textarea class="form-control" spellcheck="false" id="id_recipe_text" name="recipe_text"
+                                      rows="8" required placeholder="Message"></textarea>
+                            <div class="validate"></div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit">Add new recipe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+</main>
+
+
 </body>
+
 </html>
