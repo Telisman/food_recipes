@@ -26,7 +26,7 @@ def create_recipe(request):
 
             # Update average rating and total ratings here if needed
 
-            return redirect('home')  # Replace 'home' with the desired redirect URL after recipe creation
+            return redirect('recipe_list')  # Replace 'home' with the desired redirect URL after recipe creation
     else:
         form = RecipeForm()
     return render(request, 'create_recipe.html', {'form': form,'ingredients':ingredients})
