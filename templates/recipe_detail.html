@@ -1,30 +1,7 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ recipe.name }} Details</title>
-    <!-- Add any necessary CSS or styling links here -->
-</head>
-<body>
-<h1>{{ recipe.name }} Details</h1>
-<p><strong>Recipe Name:</strong> {{ recipe.name }}</p>
-<p><strong>Recipe Text:</strong> {{ recipe.recipe_text }}</p>
-<!-- Display other recipe details as needed -->
 
-<h2>Rate this Recipe</h2>
-<form method="post" action="{% url 'recipe_detail' recipe.id %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit Rating</button>
-</form>
-<p><strong>Average Rating:</strong> {{ average_rating }}</p>
-</body>
-</html>
-
-
-<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -32,95 +9,84 @@
     <title>Restaurantly Bootstrap Template - Index</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
           rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="assets/css/style.css" rel="stylesheet">
-
-
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Amatic+SC:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-          rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/main.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'swiper-bundle.min.css' %}">
-
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_list/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets_list/css/style.css' %}">
 
 </head>
 
-<body data-aos-easing="ease-in-out" data-aos-duration="1000" data-aos-delay="0">
+<body>
+<header id="header" class="fixed-top d-flex align-items-cente">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
+        <nav id="navbar" class="navbar order-last order-lg-0">
+            <ul>
+                <li><a class="nav-link scrollto active" href="{% url 'recipe_list'%}">List of Recipes</a></li>
+                <li><a class="nav-link scrollto" href="{% url 'own_recipe_list' %}">Own Recipes</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+        <a href="{% url 'create_recipe' %}" class="book-a-table-btn scrollto d-none d-lg-flex">Add Recipe</a>
+    </div>
+</header>
+<main id="main" style="padding-top:5%;">
+    <section id="menu" class="menu section-bg">
+        <div class="container" data-aos="fade-up">
 
-<main id="main">
-
-    <section id="about" class="about">
-        <div class="container aos-init aos-animate" data-aos="fade-up">
-
-            <div class="row">
-                <div class="col-lg-6 order-1 order-lg-2 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="about-img">
-                        <img src="assets/img/about.jpg" alt="">
-                    </div>
-                </div>
-                <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
-                    <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
-                    <p class="fst-italic">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore
-                        magna aliqua.
-                    </p>
-                    <ul>
-                        <li><i class="bi bi-check-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        </li>
-                        <li><i class="bi bi-check-circle"></i> Duis aute irure dolor in reprehenderit in voluptate
-                            velit.
-                        </li>
-                        <li><i class="bi bi-check-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu
-                            fugiat nulla pariatur.
-                        </li>
-                    </ul>
-                    <p>
-                        Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                        in voluptate
-                        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                        proident, sunt in
-                        culpa qui officia deserunt mollit anim id est laborum
-                    </p>
-                </div>
+            <div class="section-title">
+                <h2>Recipes</h2>
+                <p>Check Our Tasty Recipes</p>
             </div>
 
+            <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-lg-6 menu-item filter-starters">
+                    <div class="menu-content">
+                        <a href="{% url 'recipe_detail' recipe_id=recipe.id %}"><h1>{{ recipe.name }}</h1></a><span>Rating {{ recipe.average_rating }}</span>
+                    </div>
+                    </br>
+                    <div class="menu-ingredients">
+                        {{ recipe.recipe_text }}
+                    </div>
+                    </br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="menu-ingredients">
+                                <h6> Author: </h6>
+                                <span>  {{ recipe.author.username }}</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="menu-ingredients">
+                                <h6>Ingredients: </h6>
+                                {% for ingredient in recipe.ingredients.all %}
+                                <span> {{ ingredient.name }}/ </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="menu-ingredients">
+                                <form method="post" action="{% url 'recipe_detail' recipe.id %}">
+                                    {% csrf_token %}
+
+                                    <select name="rating" class="form-control" id="id_rating">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select><br>
+                                    <button class="form-control" type="submit">Submit Rating</button>
+                                </form>
+                                <p><strong>Average Rating:</strong> {{ average_rating }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
         </div>
-    </section>
-
+    </section><!-- End Menu Section -->
 </main>
-
-
-<!-- Vendor JS Files -->
-<script src="assets/vendor/aos/aos.js"></script>
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-<script src="assets/vendor/php-email-form/validate.js"></script>
-
-<!-- Template Main JS File -->
-<script src="assets/js/main.js"></script>
-
-
 </body>
 </html>
