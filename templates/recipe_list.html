@@ -17,8 +17,24 @@
 </head>
 
 <body>
-<main id="main">
-    <section id="menu" class="menu section-bg">
+<header id="header" class="fixed-top d-flex align-items-cente">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
+      <h1 class="logo me-auto me-lg-0"><a href="index.html">Restaurantly</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto active" href="{% url 'recipe_list'%}">List of Recipes</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'own_recipe_list' %}">Own Recipes</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+        <a href="{% url 'create_recipe' %}" class="book-a-table-btn scrollto d-none d-lg-flex">Add Recipe</a>
+    </div>
+  </header>
+<main id="main" style="padding-top:5%;">
+    <section id="menu" class="menu section-bg" >
         <div class="container" data-aos="fade-up">
 
             <div class="section-title">
