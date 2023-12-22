@@ -67,7 +67,6 @@
                             <div class="menu-ingredients">
                                 <form method="post" action="{% url 'recipe_detail' recipe.id %}">
                                     {% csrf_token %}
-
                                     <select name="rating" class="form-control" id="id_rating">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -81,12 +80,10 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
-    </section><!-- End Menu Section -->
+    </section>
 </main>
 </body>
 </html>

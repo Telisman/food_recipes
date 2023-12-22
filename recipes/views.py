@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect,get_object_or_404
-from .form import RecipeForm,RecipeRatingForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .form import RecipeForm, RecipeRatingForm
 from django.contrib.auth.decorators import login_required
-from .models import Recipe,RecipeRating
+from .models import Recipe, RecipeRating
 from ingredient.models import Ingredient
+
 
 @login_required
 def create_recipe(request):
@@ -21,7 +22,7 @@ def create_recipe(request):
             return redirect('recipe_list')
     else:
         form = RecipeForm()
-    return render(request, 'create_recipe.html', {'form': form,'ingredients':ingredients})
+    return render(request, 'create_recipe.html', {'form': form, 'ingredients': ingredients})
 
 
 @login_required
@@ -29,12 +30,12 @@ def recipe_list(request):
     recipes = Recipe.objects.all()
     return render(request, 'recipe_list.html', {'recipes': recipes})
 
+
 @login_required
 def own_recipe_list(request):
     user = request.user
     own_recipes = Recipe.objects.filter(author=user)
     return render(request, 'own_recipe_list.html', {'own_recipes': own_recipes})
-
 
 
 @login_required
