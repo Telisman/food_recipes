@@ -12,25 +12,16 @@ def create_recipe(request):
         if form.is_valid():
             recipe = form.save(commit=False)
             recipe.author = request.user
-
-            # Save the recipe first to obtain its ID
             recipe.save()
-
-            # Get the selected ingredients from the form
             selected_ingredients = request.POST.getlist('ingredients')
 
-            # Assign selected ingredients to the recipe
             for ingredient_id in selected_ingredients:
                 ingredient = Ingredient.objects.get(pk=ingredient_id)
                 recipe.ingredients.add(ingredient)
-
-            # Update average rating and total ratings here if needed
-
-            return redirect('recipe_list')  # Replace 'home' with the desired redirect URL after recipe creation
+            return redirect('recipe_list')
     else:
         form = RecipeForm()
     return render(request, 'create_recipe.html', {'form': form,'ingredients':ingredients})
-# recipes/views.py
 
 
 @login_required
@@ -67,7 +58,6 @@ def recipe_detail(request, recipe_id):
     else:
         form = RecipeRatingForm()
 
-    # Calculate the average rating for the recipe
     ratings = RecipeRating.objects.filter(recipe=recipe)
     total_ratings = ratings.count()
     average_rating = sum(rating.rating for rating in ratings) / total_ratings if total_ratings > 0 else 0
