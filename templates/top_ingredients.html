@@ -19,18 +19,19 @@
 <body>
 <header id="header" class="fixed-top d-flex align-items-cente">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
-      <nav id="navbar" class="navbar order-last order-lg-0">
-        <ul>
-          <li><a class="nav-link scrollto active" href="{% url 'recipe_list'%}">List of Recipes</a></li>
-          <li><a class="nav-link scrollto" href="{% url 'own_recipe_list' %}">Own Recipes</a></li>
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav>
+        <nav id="navbar" class="navbar order-last order-lg-0">
+            <ul>
+                <li><a class="nav-link scrollto " href="{% url 'recipe_list'%}">List of Recipes</a></li>
+                <li><a class="nav-link scrollto" href="{% url 'own_recipe_list' %}">Own Recipes</a></li>
+                <li><a class="nav-link scrollto active" href="{% url 'top_ingredients' %}">Top 5 ingredients</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
         <a href="{% url 'create_recipe' %}" class="book-a-table-btn scrollto d-none d-lg-flex">Add Recipe</a>
     </div>
-  </header>
+</header>
 <main id="main" style="padding-top:5%;">
-    <section id="menu" class="menu section-bg" >
+    <section id="menu" class="menu section-bg">
         <div class="container" data-aos="fade-up">
 
             <div class="section-title">
@@ -42,7 +43,8 @@
                 {% for ingredient in top_ingredients %}
                 <div class="col-lg-6 menu-item filter-starters">
                     <div class="menu-content">
-                        <a href=""><h1>{{ ingredient.name }}</h1></a><span>Used in {{ ingredient.num_recipes }} recipes </span>
+                        <a href=""><h1>{{ ingredient.name }}</h1>
+                        </a><span>Used in {{ ingredient.num_recipes }} recipes </span>
                     </div>
                     </br>
 

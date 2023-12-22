@@ -19,24 +19,42 @@
 <body>
 <header id="header" class="fixed-top d-flex align-items-cente">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
-      <nav id="navbar" class="navbar order-last order-lg-0">
-        <ul>
-          <li><a class="nav-link scrollto active" href="{% url 'recipe_list'%}">List of Recipes</a></li>
-          <li><a class="nav-link scrollto" href="{% url 'own_recipe_list' %}">Own Recipes</a></li>
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav>
+        <nav id="navbar" class="navbar order-last order-lg-0">
+            <ul>
+                <li><a class="nav-link scrollto active" href="{% url 'recipe_list'%}">List of Recipes</a></li>
+                <li><a class="nav-link scrollto" href="{% url 'own_recipe_list' %}">Own Recipes</a></li>
+                <li><a class="nav-link scrollto " href="{% url 'top_ingredients' %}">Top 5 ingredients</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
         <a href="{% url 'create_recipe' %}" class="book-a-table-btn scrollto d-none d-lg-flex">Add Recipe</a>
     </div>
-  </header>
+</header>
 <main id="main" style="padding-top:5%;">
-    <section id="menu" class="menu section-bg" >
+    <section id="menu" class="menu section-bg">
         <div class="container" data-aos="fade-up">
 
             <div class="section-title">
                 <h2>Recipes</h2>
                 <p>Check Our Tasty Recipes</p>
             </div>
+            <form method="GET" action="{% url 'recipe_list' %}">
+                {% csrf_token %}
+                <p>
+                    <label class="form-class"  for="id_search_query">Search Recipes:</label>
+                    <input class="form-class" type="text" name="search_query" id="id_search_query">
+                </p>
+                <p>
+                    <label class="form-class"  for="id_min_ingredients">Minimum Ingredients:</label>
+                    <input class="form-class"  type="number" name="min_ingredients"  id="id_min_ingredients">
+                </p>
+                <p>
+                    <label class="form-class"  for="id_max_ingredients">Maximum Ingredients:</label>
+                    <input class="form-class"  type="number" name="max_ingredients"  id="id_max_ingredients">
+                </p>
+                <button class="book-a-table-btn scrollto d-none d-lg-flex"  style="color:#cda45e;"  type="submit">Search &amp; Filter</button>
+            </form>
+
 
             <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
                 {% for recipe in recipes %}

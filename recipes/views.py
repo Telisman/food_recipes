@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .form import RecipeForm, RecipeRatingForm
+from .form import RecipeForm, RecipeRatingForm,RecipeSearchForm
 from django.contrib.auth.decorators import login_required
 from .models import Recipe, RecipeRating
 from ingredient.models import Ingredient
+from django.db.models import Count, Q
 
 
 @login_required
@@ -28,7 +29,29 @@ def create_recipe(request):
 @login_required
 def recipe_list(request):
     recipes = Recipe.objects.all()
-    return render(request, 'recipe_list.html', {'recipes': recipes})
+    search_form = RecipeSearchForm(request.GET)
+    min_ingredients = request.GET.get('min_ingredients')
+    max_ingredients = request.GET.get('max_ingredients')
+
+    # Filter recipes by name, text, and ingredients
+    if search_form.is_valid():
+        search_query = search_form.cleaned_data.get('search_query')
+
+        if search_query:
+            recipes = recipes.filter(
+                Q(name__icontains=search_query) |
+                Q(recipe_text__icontains=search_query) |
+                Q(ingredients__name__icontains=search_query)
+            )
+
+    # Filter by minimum and maximum number of ingredients
+    if min_ingredients:
+        recipes = recipes.annotate(num_ingredients=Count('ingredients')).filter(num_ingredients__gte=min_ingredients)
+
+    if max_ingredients:
+        recipes = recipes.annotate(num_ingredients=Count('ingredients')).filter(num_ingredients__lte=max_ingredients)
+
+    return render(request, 'recipe_list.html', {'recipes': recipes, 'search_form': search_form})
 
 
 @login_required
