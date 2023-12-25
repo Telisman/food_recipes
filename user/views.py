@@ -4,7 +4,14 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 import requests
 from django.contrib import messages
-
+from rest_framework.views import APIView
+from .serializers import UserSerializer
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.exceptions import AuthenticationFailed
+from .models import User
+import jwt
+import datetime
 def register_user(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -49,3 +56,13 @@ def user_login(request):
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
+
+class RegisterView(APIView):
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
