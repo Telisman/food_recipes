@@ -11,7 +11,7 @@ def register_user(request):
         if form.is_valid():
             email_to_verify = form.cleaned_data['email']
             hunter_api_key = '5daa2ca116eebcb451f0736dc888126983c3f97d'
-            hunter_url = f'https://api.hunter.io/v2/email-verifier?email={email_to_verify}&api_key={hunter_api_key}'
+            hunter_url = f'https://api.hunter.io/v2/email-verifier?email={email_to_verify}&api_key={hunter_api_key}' #endpoint API
 
             response = requests.get(hunter_url)
             if response.status_code == 200:
