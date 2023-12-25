@@ -1,0 +1,24 @@
+{
+    "data": {
+        "status": "invalid",
+        "result": "undeliverable",
+        "_deprecation_notice": "Using result is deprecated, use status instead",
+        "score": 0,
+        "email": "davortelismank@gmail.com",
+        "regexp": true,
+        "gibberish": false,
+        "disposable": false,
+        "webmail": true,
+        "mx_records": true,
+        "smtp_server": true,
+        "smtp_check": false,
+        "accept_all": false,
+        "block": false,
+        "sources": []
+    },
+    "meta": {
+        "params": {
+            "email": "davortelismank@gmail.com"
+        }
+    }
+}
