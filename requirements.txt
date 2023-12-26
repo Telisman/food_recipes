@@ -1,0 +1,14 @@
+Django
+PyJWT==	2.8.0
+asgiref==3.7.2
+certifi==2023.11.17
+charset-normalizer==3.3.2
+django-cors-headers==4.3.1
+djangorestframework==3.14.0
+djangorestframework-simplejwt==	5.3.1
+openpyxl==3.1.2
+pandas==2.1.4
+pip	==23.2.1
+pytz==2023.3.post1
+requests==2.31.0
+six==1.16.0
