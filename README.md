@@ -27,5 +27,8 @@ This Django application provides a RESTful API for user authentication and user 
 
 ## Usage
 Register a New User
-Endpoint: POST /api/register/
+Endpoint:
+ ```bash
+    POST http://127.0.0.1:8000/api/register/
+
 
