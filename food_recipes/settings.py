@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "ingredient",
     "recipes",
     "user",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -121,3 +122,18 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = 'user.User'
 LOGIN_URL = '/login/'
 LOGOUT_REDIRECT_URL = '/login/'
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',  # Use session authentication for browsable API
+         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # Add any other authentication classes you need
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+        # Permission settings, adjust as needed
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        # Renderer settings, adjust as needed
+    ],
+}

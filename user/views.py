@@ -5,20 +5,22 @@ from django.contrib.auth.forms import AuthenticationForm
 import requests
 from django.contrib import messages
 from rest_framework.views import APIView
-from .serializers import UserSerializer
+from .serializers import UserRegistrationSerializer, TokenObtainPairSerializer,UserListSerializer
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
 from .models import User
-import jwt
-import datetime
+
 def register_user(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             email_to_verify = form.cleaned_data['email']
             hunter_api_key = '5daa2ca116eebcb451f0736dc888126983c3f97d'
-            hunter_url = f'https://api.hunter.io/v2/email-verifier?email={email_to_verify}&api_key={hunter_api_key}' #endpoint API
+            hunter_url = f'https://api.hunter.io/v2/email-verifier?email={email_to_verify}&api_key={hunter_api_key}'  # endpoint API
 
             response = requests.get(hunter_url)
             if response.status_code == 200:
@@ -46,9 +48,9 @@ def user_login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
+            user = authenticate(email=email, password=password)
             if user is not None:
                 login(request, user)
                 # Redirect to a specific page after login
@@ -57,40 +59,38 @@ def user_login(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
-# class RegisterView(APIView):
-#     def post(self, request):
-#         serializer = UserSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#
-#
-# class LoginView(APIView):
-#     def post(self, request):
-#         email = request.data.get('email')
-#         password = request.data.get('password')
-#
-#         try:
-#             user = User.objects.get(email=email)
-#         except User.DoesNotExist:
-#             raise AuthenticationFailed('User not found!!')
-#
-#         if not user.check_password(password):
-#             raise AuthenticationFailed('Password incorrect')
-#
-#         exp_time = datetime.datetime.utcnow() + datetime.timedelta(minutes=60)
-#
-#         payload = {
-#             'id': user.id,
-#             'exp': exp_time.isoformat(),  # Convert datetime to a string
-#             'lat': datetime.datetime.utcnow().isoformat()  # Convert datetime to a string
-#         }
-#
-#         token = jwt.encode(payload, 'secret', algorithm='HS256')
-#         response = Response()
-#         response.set_cookie(key='jwt',value=token,httponly=True)
-#         response.data ={
-#             'jwt': token
-#         }
-#         return response
+
+class UserRegistrationAPIView(APIView):
+    authentication_classes = []  # Override authentication classes for this view
+    permission_classes = [AllowAny]  # Allow unauthenticated access
+
+    def post(self, request):
+        serializer = UserRegistrationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TokenObtainPairAPIView(APIView):
+    authentication_classes = []  # Override authentication classes for this view
+    permission_classes = [AllowAny]  # Allow unauthenticated access
+
+    def post(self, request):
+        serializer = TokenObtainPairSerializer(data=request.data)
+        if serializer.is_valid():
+            return Response(serializer.validated_data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class UserLoginAPIView(APIView):
+    authentication_classes = [JWTAuthentication]  # Use JWT authentication for this view
+    permission_classes = [IsAuthenticated]  # Require authenticated access
+
+    def post(self, request):
+        return Response({"message": "User successfully authenticated."}, status=status.HTTP_200_OK)
+
+class UserListView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserListSerializer
+    permission_classes = [IsAuthenticated]
