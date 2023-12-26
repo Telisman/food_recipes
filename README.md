@@ -25,7 +25,7 @@ This Django application provides a RESTful API for user authentication and user 
    python manage.py makemigrations
    python manage.py migrate
 
-##Usage
+## Usage
 Register a New User
 Endpoint: POST /api/register/
 
