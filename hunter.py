@@ -1,5 +1,8 @@
 import json
 import requests
+
+
+#simple script for hunter
 hunter ="https://api.hunter.io/v2/email-verifier?email=davortelismank@gmail.com&api_key=5daa2ca116eebcb451f0736dc888126983c3f97d"
 def load(source, output_file=None):
     """Load JSON data from a file or URL"""

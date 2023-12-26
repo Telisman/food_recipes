@@ -5,7 +5,7 @@ from .models import Recipe, RecipeRating
 from ingredient.models import Ingredient
 from django.db.models import Count, Q
 
-
+#create now recipe, user must be register and login to do this
 @login_required
 def create_recipe(request):
     ingredients = Ingredient.objects.all()
@@ -25,13 +25,13 @@ def create_recipe(request):
         form = RecipeForm()
     return render(request, 'create_recipe.html', {'form': form, 'ingredients': ingredients})
 
-
+#recipe's list, user must be register and login to do this with search form
 @login_required
 def recipe_list(request):
-    recipes = Recipe.objects.all()
-    search_form = RecipeSearchForm(request.GET)
-    min_ingredients = request.GET.get('min_ingredients')
-    max_ingredients = request.GET.get('max_ingredients')
+    recipes = Recipe.objects.all() #are model
+    search_form = RecipeSearchForm(request.GET)#search form
+    min_ingredients = request.GET.get('min_ingredients') #form elements
+    max_ingredients = request.GET.get('max_ingredients')#form elements
 
     # Filter recipes by name, text, and ingredients
     if search_form.is_valid():
@@ -53,14 +53,14 @@ def recipe_list(request):
 
     return render(request, 'recipe_list.html', {'recipes': recipes, 'search_form': search_form})
 
-
+#own recipe's list, user must be register and login to do this
 @login_required
 def own_recipe_list(request):
     user = request.user
     own_recipes = Recipe.objects.filter(author=user)
     return render(request, 'own_recipe_list.html', {'own_recipes': own_recipes})
 
-
+#recipe detail by selection title and useing id, user must be register and login to do this
 @login_required
 def recipe_detail(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)

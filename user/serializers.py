@@ -2,11 +2,14 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
 
+
+#main serializer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'email', 'first_name', 'last_name','username')
 
+#register serializer
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
@@ -25,6 +28,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         )
         return user
 
+#token serializer
 class TokenObtainPairSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
@@ -51,7 +55,7 @@ class TokenObtainPairSerializer(serializers.Serializer):
             raise serializers.ValidationError(msg)
 
 
-
+#this is not necessary, instead of that use main serializer
 class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

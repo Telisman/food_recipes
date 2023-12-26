@@ -4,6 +4,7 @@ from django.db.models import Count
 from .models import Ingredient
 from recipes.models import Recipe
 
+#see top 5 Ingredient and how much are used
 def top_ingredients(request):
     top_ingredients = Ingredient.objects.annotate(num_recipes=Count('recipe')).order_by('-num_recipes')[:5]
 

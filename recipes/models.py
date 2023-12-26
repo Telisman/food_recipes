@@ -2,6 +2,8 @@ from django.db import models
 from user.models import User
 from ingredient.models import Ingredient
 
+
+#model for are Recipe's
 class Recipe(models.Model):
     name = models.CharField(max_length=255)
     recipe_text = models.TextField()
@@ -11,6 +13,8 @@ class Recipe(models.Model):
     total_ratings = models.PositiveIntegerField(default=0)
     def __str__(self):
             return self.name
+
+#Rating model for are recipe's
 class RecipeRating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
