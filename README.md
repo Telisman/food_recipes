@@ -29,6 +29,56 @@ This Django application provides a RESTful API for user authentication and user 
 Register a New User
 Endpoint:
  ```bash
-    POST http://127.0.0.1:8000/api/register/
-
-
+POST http://127.0.0.1:8000/api/register/
+```
+Sample request:
+ ```bash
+Content-Type: application/json
+{
+    "email": "user@example.com",
+    "password": "password123",
+    "first_name": "John",
+    "last_name": "Doe",
+    "username": "Doe1"
+}
+```
+Obtain JWT Tokens (Login):
+Endpoint:
+ ```bash
+POST http://127.0.0.1:8000/api/token/
+```
+Sample request:
+ ```bash
+Content-Type: application/json
+{
+    "email": "user@example.com",
+    "password": "password123"
+}
+```
+Get User Login:
+Endpoint:
+ ```bash
+POST http://127.0.0.1:8000/api/login/
+```
+Sample request:
+ ```bash
+Authorization: Bearer <your_access_token>
+```
+Get User List:
+Endpoint:
+ ```bash
+POST http://127.0.0.1:8000/api/users-list/
+```
+Sample request:
+ ```bash
+Authorization: Bearer <your_access_token>
+```
+Get User Detail by ID:
+Endpoint:
+ ```bash
+POST http://127.0.0.1:8000/api/user-id/<int:id>
+```
+Sample request:
+ ```bash
+Authorization: Bearer <your_access_token>
+```
