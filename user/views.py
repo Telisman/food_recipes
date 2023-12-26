@@ -57,40 +57,40 @@ def user_login(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
-class RegisterView(APIView):
-    def post(self, request):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class LoginView(APIView):
-    def post(self, request):
-        email = request.data.get('email')
-        password = request.data.get('password')
-
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            raise AuthenticationFailed('User not found!!')
-
-        if not user.check_password(password):
-            raise AuthenticationFailed('Password incorrect')
-
-        exp_time = datetime.datetime.utcnow() + datetime.timedelta(minutes=60)
-
-        payload = {
-            'id': user.id,
-            'exp': exp_time.isoformat(),  # Convert datetime to a string
-            'lat': datetime.datetime.utcnow().isoformat()  # Convert datetime to a string
-        }
-
-        token = jwt.encode(payload, 'secret', algorithm='HS256')
-        response = Response()
-        response.set_cookie(key='jwt',value=token,httponly=True)
-        response.data ={
-            'jwt': token
-        }
-        return response
+# class RegisterView(APIView):
+#     def post(self, request):
+#         serializer = UserSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#
+#
+# class LoginView(APIView):
+#     def post(self, request):
+#         email = request.data.get('email')
+#         password = request.data.get('password')
+#
+#         try:
+#             user = User.objects.get(email=email)
+#         except User.DoesNotExist:
+#             raise AuthenticationFailed('User not found!!')
+#
+#         if not user.check_password(password):
+#             raise AuthenticationFailed('Password incorrect')
+#
+#         exp_time = datetime.datetime.utcnow() + datetime.timedelta(minutes=60)
+#
+#         payload = {
+#             'id': user.id,
+#             'exp': exp_time.isoformat(),  # Convert datetime to a string
+#             'lat': datetime.datetime.utcnow().isoformat()  # Convert datetime to a string
+#         }
+#
+#         token = jwt.encode(payload, 'secret', algorithm='HS256')
+#         response = Response()
+#         response.set_cookie(key='jwt',value=token,httponly=True)
+#         response.data ={
+#             'jwt': token
+#         }
+#         return response
