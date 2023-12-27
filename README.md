@@ -82,3 +82,13 @@ Sample request:
  ```bash
 Authorization: Bearer <your_access_token>
 ```
+# Django web app
+## Features
+- User Registration 
+- User email authentication using hunter.io API endpoint 
+- User login page
+- Recipes list with filter search form
+- Own recipes page
+- Detail recipes page, where User can rate recipes from 1 to 5, user can not rate his own recipe.
+- Create a recipe page
+- List of top 5 ingredients 
